@@ -1,0 +1,25 @@
+# ////////// IPv4 NAT ruleset //////////   
+table ip nat {
+    chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+    }
+    # for all the postrouting packets to wan, replace the source address with
+    # primary ip of wan interface
+    chain postrouting {
+        type nat hook postrouting priority 0; policy accept;
+        oifname "eth0" masquerade
+    }
+}
+
+# ////////// IPv6 NAT ruleset //////////   
+table ip6 nat {
+    chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+    }
+    # for all the postrouting packets to wan, replace the source address with
+    # primary ip of wan interface
+    chain postrouting {
+        type nat hook postrouting priority 0; policy accept;
+        oifname "eth0" masquerade
+    }
+}
