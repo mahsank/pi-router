@@ -1,0 +1,25 @@
+Index: stage2/rootfs/etc/dnsmasq.conf
+===================================================================
+--- stage2.orig/rootfs/etc/dnsmasq.conf
++++ stage2/rootfs/etc/dnsmasq.conf
+@@ -679,5 +679,9 @@
+ #dhcp-ignore-names=tag:wpad-ignore
+ 
+ # Delays sending DHCPOFFER and proxydhcp replies for at least the specified number of seconds.
+-dhcp-mac=set:client_is_a_pi,B8:27:EB:*:*:*
+-dhcp-reply-delay=tag:client_is_a_pi,2
++#dhcp-mac=set:client_is_a_pi,B8:27:EB:*:*:*
++#dhcp-reply-delay=tag:client_is_a_pi,2
++interface=wlan0
++dhcp-range=192.168.16.2,192.168.16.254,255.255.255.0,24h
++domain=pirouter
++address=/gw.pirouter/192.168.16.1
+Index: stage2/rootfs/etc/default/dnsmasq
+===================================================================
+--- stage2.orig/rootfs/etc/default/dnsmasq
++++ stage2/rootfs/etc/default/dnsmasq
+@@ -31,3 +31,4 @@ CONFIG_DIR=/etc/dnsmasq.d,.dpkg-dist,.dp
+ # /etc/dnsmasq.conf is not enough to override resolvconf if it is
+ # installed: the line below must be uncommented.
+ #IGNORE_RESOLVCONF=yes
++DNSMASQ_EXCEPT=lo

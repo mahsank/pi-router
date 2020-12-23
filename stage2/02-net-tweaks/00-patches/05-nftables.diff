@@ -1,0 +1,24 @@
+Index: stage2/rootfs/etc/nftables.conf
+===================================================================
+--- stage2.orig/rootfs/etc/nftables.conf
++++ stage2/rootfs/etc/nftables.conf
+@@ -2,14 +2,8 @@
+ 
+ flush ruleset
+ 
+-table inet filter {
+-	chain input {
+-		type filter hook input priority 0;
+-	}
+-	chain forward {
+-		type filter hook forward priority 0;
+-	}
+-	chain output {
+-		type filter hook output priority 0;
+-	}
+-}
++# include nftables rules
++# IPv4/6 nat
++include "/etc/nftables/inet-nat.nft"
++# IPv4/6 filter
++include "/etc/nftables/inet-filter.nft"
