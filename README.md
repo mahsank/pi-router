@@ -1,6 +1,6 @@
 # PiRouter
 
-PiRouter is a tool used to generate a custom raspbian image that transforms an RPi board into a secure router(strictly
+PiRouter is a tool used to generate a custom raspbian image that transforms an `RPi`(tested on `RPi` 4) board into a secure router(strictly
 speaking an access point). PiRouter is derived from [pi-gen](https://github.com/RPi-Distro/pi-gen) and is based on 
 [2020-12-02](https://github.com/RPi-Distro/pi-gen/releases/tag/2020-12-02-raspbian-buster) release.
 
@@ -35,7 +35,7 @@ The following environment variables are supported:
 
 - `IMG_FILENAME` 
 
-  Combination of `IMG_DATE` and `IMG_NAME`.
+  Combination of `IMG_DATE` and `IMG_NAME`(defined in `router-config`).
 
 - `ZIP_FILENAME`
 
@@ -44,13 +44,13 @@ The following environment variables are supported:
 - `RELEASE` (Default: `buster`)
 
   The release version to build image against. Valid values are `jessie`, `stretch`, `buster`, `bullseye`, and `testing`.
-  Note that `PiRouter` is only tested with `buster`.
+  Note that `PiRouter` is tested with `buster` only.
 
 
 - `BASE_DIR` (Default location of `build.sh`)
 
-  This is the top-level directory for `PiRouter`. It contains stage directories, build scripts, and by default both work and
-deployment directories. Changing this variable is not recommended.
+  This is the top-level directory for `PiRouter`. It contains `stage` directories, build scripts, and by default both `work` and
+`deploy` directories. Changing this variable is not recommended.
 
 - `SCRIPT_DIR`
 
@@ -61,7 +61,7 @@ deployment directories. Changing this variable is not recommended.
   Directory in which `PiRouter` builds the target system. This value can be changed if a sufficiently large, fast, storage
 location is available for running build stages and caching purposes. It is important to note that `WORK_DIR` stores a
 complete copy of the target system for each build stage and it can grow extremely rapidly. This will result in hogging
-the storage space quickly.
+the storage space quickly. If you are building frequently, periodic cleaning of this directory is recommended.
 
 - `DEPLOY_DIR` (Default: `"$BASE_DIR/deploy"`)
 
@@ -69,7 +69,7 @@ the storage space quickly.
 
 - `DEPLOY_ZIP` (Default: 0)
 
-  By default, the image is deployed only as a regular iso image.
+  By default, the image is deployed only as a regular `iso` image.
 
 - `LOG_FILE` (Default: `"$WORK_DIR/build.log"`)
 
@@ -111,15 +111,9 @@ the storage space quickly.
 
   If set, then instead of working through the numeric stages in order, this list will be followed. For example, setting to
 "stage0 stage1 mystage stage2" will run the contents of "mystage" before "stage2". Note the quotes, they are needed
-around the list. An absolute or relative path can be given for stages outside the `pi-gen` directory.
+around the list. An absolute or relative path can be given for stages outside the `PiRouter` directory.
 
-The `router-config` file can be specified on the commandline as an agrument to `build.sh`. 
-
-```bash
-$ ./build.sh -c router-config
-```
-
-This is parsed after `config` and is used to override the default settings.
+A minimal `router-config` file is included in the build and is the default for `build.sh`.If needed, this file can be customized further.
 
 ## Build Process
 
@@ -151,7 +145,7 @@ The image is built with the following process:
   e.g.
 
   ```bash
-  $ CONTINUE=1 ./build.sh -c router-config
+  $ CONTINUE=1 ./build.sh
   ```
 
 Please refer to `build.sh` for finer details.
@@ -175,3 +169,6 @@ All the customizations needed to transform `RPi`  into a secure router are done 
 
 `PiRouter` is secured with `nftables`. Please read more about `nftables` at the [link](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page).
 
+## Known Limitations
+
+Currently, `PiRouter` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
