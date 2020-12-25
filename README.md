@@ -163,7 +163,7 @@ The build process is divided up into several stages for logical clarity and modu
 
 All the customizations needed to transform `RPi`  into a secure router are done at this stage. Contrary to `pi-gen` build stages, `PiRouter` does not need to go beyond this stage.
 
-## Network Configuration Details
+## Network Configuration and Security Details
 
 `PiRouter` makes use of `dnsmasq`, `dhcpcd`, and `hostapd` to transform the `RPi` into a router. The default LAN side gateway ip address is `192.168.16.1/24` and the connected clients are assigned addresses in the range of `192.168.16.2-254`. WAN side address is supplied by the RJ-45 connector on `RPi` board.
 

@@ -125,9 +125,9 @@ fi
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export BASE_DIR
 
-if [ -f config ]; then
+if [ -f router-config ]; then
 	# shellcheck disable=SC1091
-	source config
+	source router-config
 fi
 
 while getopts "c:" flag
