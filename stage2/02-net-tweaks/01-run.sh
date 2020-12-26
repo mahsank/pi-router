@@ -10,7 +10,6 @@ install -v -m 644 files/inet-filter.nft         "${ROOTFS_DIR}/etc/nftables/"
 
 # hostapd configuration
 CONF_FILE="files/hostapd.conf"
-source "$CONF_FILE"
 SED=$(command -v \sed)
 
 HOSTAPD_VARS=("country_code" "ssid" "wpa_passphrase")
