@@ -11,20 +11,20 @@ install -v -m 644 files/inet-filter.nft         "${ROOTFS_DIR}/etc/nftables/"
 # hostapd configuration
 CONF_FILE="files/hostapd.conf"
 SED=$(command -v \sed)
+GREP=$(command -v \grep)
 
 HOSTAPD_VARS=("country_code" "ssid" "wpa_passphrase")
 HOSTAPD_VALS=("$WPA_COUNTRY" "$WPA_ESSID" "$WPA_PASSWORD")
 
 for i in $(seq 0 2)
 do
-    if [ "${!HOSTAPD_VARS[$i]}" = "" ]; then
+    if [ $($GREP "${HOSTAPD_VARS[$i]}=$" "${CONF_FILE}") ]; then
         $SED -i "s/\(^${HOSTAPD_VARS[$i]}=\)/&${HOSTAPD_VALS[$i]}/" $CONF_FILE
     fi  
 done
 install -v -m 600 files/hostapd.conf            "${ROOTFS_DIR}/etc/hostapd/"
 
 # enable debugging via serial port                                                                                                                                        
-GREP=$(command -v \grep)
 if [ "${ENABLE_DEBUG}" == "1" ]; then
     if [ ! $($GREP "enable_uart=1" "${ROOTFS_DIR}/boot/config.txt") ]; then
         echo >> "${ROOTFS_DIR}/boot/config.txt"
