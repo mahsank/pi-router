@@ -22,6 +22,9 @@ dnf install coreutils quilt parted qemu-user-static debootstrap zerofree \
 zip dosfstools bsdtar libcap grep rsync xz file git curl bc
 ```
 
+Other distributions should work but not tested. Feel free to give `PiRouter` a spin on your favorite distro and let me
+know the results.
+
 ## Router-Config
 
 Upon execution, `build.sh` will source the file `router-config` in the current working directory. This bash shell fragment is
