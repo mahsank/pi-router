@@ -166,7 +166,7 @@ export ENABLE_DEBUG="${ENABLE_DEBUG:-0}"
 export TARGET_HOSTNAME=${TARGET_HOSTNAME:-rpirouter}
 
 export FIRST_USER_NAME=${FIRST_USER_NAME:-pi}
-export FIRST_USER_PASS=${FIRST_USER_PASS:-raspberry}
+export FIRST_USER_PASS=${FIRST_USER_PASS:-Ra5pb3rry}
 export RELEASE=${RELEASE:-buster}
 export WPA_ESSID=${WPA_ESSID:-pisecrouter}
 export WPA_PASSWORD=${WPA_PASSWORD:-3T13F24h15h~}
