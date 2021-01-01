@@ -225,7 +225,7 @@ Linux is able execute binaries from other architectures, meaning that it should 
 You may see the following error:
 
 ```bash
-update-binfmts: warning: Couldn\'t load the binfmt_misc module.
+update-binfmts: warning: Could not load the binfmt_misc module.
 ```
 
 To resolve this, make sure that `binfmt_misc` module is loaded and `qemu-arm-static` binary is available.
