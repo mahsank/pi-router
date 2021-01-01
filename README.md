@@ -11,14 +11,14 @@ PiRouter build is tested with Debian *buster* and Fedora *33*.
 To install the required dependencies for PiRouter on Debian *buster*, run:
 
 ```bash
-apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree \
+$ apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree \
 zip dosfstools bsdtar libcap2-bin grep rsync xz-utils file git curl bc
 ```
 
 To achieve the same on Fedora *33*, run:
 
 ```bash
-dnf install coreutils quilt parted qemu-user-static debootstrap zerofree \
+$ dnf install coreutils quilt parted qemu-user-static debootstrap zerofree \
 zip dosfstools bsdtar libcap grep rsync xz file git curl bc
 ```
 
@@ -40,7 +40,7 @@ The following environment variables are supported:
 
   Combination of `IMG_DATE` and `IMG_NAME`(defined in `router-config`).
 
-- `ZIP_FILENAME`
+- `ZIP_FILENAME (Default: unset)`
 
   `IMG_FILENAME` prefixed with `image_`.
 
@@ -49,6 +49,16 @@ The following environment variables are supported:
   The release version to build image against. Valid values are `jessie`, `stretch`, `buster`, `bullseye`, and `testing`.
   Note that `PiRouter` is tested with `buster` only.
 
+- `APT_PROXY` (Default: unset)
+
+  If you need to use apt proxy, set it here. The proxy setting will not be included in the image, making it safe to use an `apt-cacher` or similar package for development.
+
+  If Docker is installed, it is possible to set up a local apt caching proxy to speed up subsequent builds like this:
+  
+  ```bash
+  $ docker-compose up -d
+  $ echo 'APT_PROXY=http://172.17.0.1:3142' >> router-config
+  ```
 
 - `BASE_DIR` (Default location of `build.sh`)
 
@@ -153,6 +163,36 @@ The image is built with the following process:
 
 Please refer to `build.sh` for finer details.
 
+## Docker Build
+
+Docker can be used to perform the build inside a container. This partially isolates the build from the host system, and allows using the script on distributions other than `Debian` or `Fedora`. It might be worth noting that Docker build can be used on `Debian` or `Fedora` as well. Running Docker build is as simple as issuing the command below:
+
+  ```bash
+  $ ./build-docker.sh
+  ```
+
+If everything goes well, the final image will be in `deploy/` directory. The build container can be removed after the build with the command:
+
+```bash
+$ docker rm -v pirouter_work
+```
+Similar to `build.sh`, `build-docker.sh` can be continued from where it left during an interruption:
+
+```bash
+$ CONTINUE=1 ./build-docker.sh
+```
+
+In case of a failure, the container can be examined by issuing the following command:
+
+```bash
+$ sudo docker run -it --privileged --volumes-from=pirouter_work pi-router /bin/bash
+```
+
+In case of successful build, the build container is by default removed. This can be changed by issuing the command:
+
+```bash
+PRESERVE_CONTAINER=1 ./build-docker.sh
+```
 
 ## Stage Anatomy
 
@@ -175,3 +215,22 @@ All the customizations needed to transform `RPi`  into a secure router are done 
 ## Known Limitations
 
 `PiRouter` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
+
+## Troubleshooting
+
+### binfmt_misc
+
+Linux is able execute binaries from other architectures, meaning that it should be possible to make use of `PiRouter` on an `x86_64` system, even though it will be running *ARM* binaries. This requires support from the `binfmt_misc` kernel module.
+
+You may see the following error:
+
+```bash
+update-binfmts: warning: Couldn\'t load the binfmt_misc module.
+```
+
+To resolve this, make sure that `binfmt_misc` module is loaded and `qemu-arm-static` binary is available.
+
+```bash
+$ lsmod | grep binfmt_misc
+$ command -v qemu-arm-static
+```
