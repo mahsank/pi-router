@@ -3,6 +3,7 @@
 PiRouter is a tool used to generate a custom raspbian image that transforms an `RPi`(tested on `RPi` 4) board into a secure router(strictly
 speaking an access point). PiRouter is derived from [pi-gen](https://github.com/RPi-Distro/pi-gen) and is based on 
 [2020-12-02](https://github.com/RPi-Distro/pi-gen/releases/tag/2020-12-02-raspbian-buster) release.
+`PiRouter` is secured with [nftables](https://wiki.nftables.org).
 
 ## Dependencies
 
@@ -206,11 +207,9 @@ The build process is divided up into several stages for logical clarity and modu
 
 All the customizations needed to transform `RPi`  into a secure router are done at this stage. Contrary to `pi-gen` build stages, `PiRouter` does not need to go beyond this stage.
 
-## Network Configuration and Security Details
+## Network Configuration Details
 
 `PiRouter` makes use of `dnsmasq`, `dhcpcd`, and `hostapd` to transform the `RPi` into a router. The default LAN side gateway ip address is `192.168.16.1/24` and the connected clients are assigned addresses in the range of `192.168.16.2-254`. WAN side address is supplied by the RJ-45 connector on `RPi` board.
-
-`PiRouter` is secured with `nftables`. Please read more about `nftables` at the [link](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page).
 
 ## Known Limitations
 
