@@ -234,3 +234,5 @@ To resolve this, make sure that `binfmt_misc` module is loaded and `qemu-arm-sta
 $ lsmod | grep binfmt_misc
 $ command -v qemu-arm-static
 ```
+
+If you find this work useful, [consider buying me a coffee](https://ko-fi.com/buchal).
