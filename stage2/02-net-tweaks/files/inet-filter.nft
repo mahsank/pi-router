@@ -1,28 +1,27 @@
 # ////////// ipv4/6 ruleset //////////   
 
 table inet filter {
-    # allow packets from lan to wan
-    # allow packets from wan to lan if lan initiated the connection
+    # drop packets with invalid state
+    # accept packets with state either established or related
     # accept packets if the input interface is lo
     # drop connections to loopback not coming from loopback
+    # allow ssh, dns etc.
     chain input {
         type filter hook input priority 0; policy drop;
-        ct state invalid counter
-        iifname "wlan0" oifname "eth0" accept
-        iifname "eth0" oifname "wlan0" ct state related,established accept
+        ct state invalid drop
+        ct state {established, related} accept
         iif lo accept
         iif != lo ip daddr 127.0.0.1/8 counter drop
         iif != lo ip6 daddr ::1/128 counter drop
         iifname "wlan0" tcp dport 22 accept
-        iifname "wlan0" udp dport 53 accept
-        iifname "wlan0" udp dport 67 accept 
+        iifname "wlan0" udp {53, 67} accept
     }
     # allow packets from lan to wan
     # allow from wan to lan (provided that lan initiated the connection)
     chain forward {
         type filter hook forward priority 0; policy drop;
         iifname "wlan0" oifname "eth0" accept
-        iifname "eth0" oifname "wlan0" ct state related,established accept
+        iifname "eth0" oifname "wlan0" ct state {established, related} accept
     }
     chain output {
         type filter hook output priority 100; policy accept;
