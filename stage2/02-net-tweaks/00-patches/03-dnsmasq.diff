@@ -2,7 +2,39 @@ Index: stage2/rootfs/etc/dnsmasq.conf
 ===================================================================
 --- stage2.orig/rootfs/etc/dnsmasq.conf
 +++ stage2/rootfs/etc/dnsmasq.conf
-@@ -679,5 +679,9 @@
+@@ -7,7 +7,7 @@
+ # Listen on this specific port instead of the standard DNS port
+ # (53). Setting this to zero completely disables DNS function,
+ # leaving only DHCP and/or TFTP.
+-#port=5353
++port=0
+ 
+ # The following two options make you a better netizen, since they
+ # tell dnsmasq to filter out queries which the public DNS cannot
+@@ -55,11 +55,11 @@
+ # If you don't want dnsmasq to read /etc/resolv.conf or any other
+ # file, getting its servers from this file instead (see below), then
+ # uncomment this.
+-#no-resolv
++no-resolv
+ 
+ # If you don't want dnsmasq to poll /etc/resolv.conf or other resolv
+ # files for changes and re-read them then uncomment this.
+-#no-poll
++no-poll
+ 
+ # Add other name servers here, with domain specs if they are for
+ # non-public domains.
+@@ -105,7 +105,7 @@
+ # Repeat the line for more than one interface.
+ #interface=
+ # Or you can specify which interface _not_ to listen on
+-#except-interface=
++except-interface=lo
+ # Or which to listen on by address (remember to include 127.0.0.1 if
+ # you use this.)
+ #listen-address=
+@@ -679,5 +679,10 @@
  #dhcp-ignore-names=tag:wpad-ignore
  
  # Delays sending DHCPOFFER and proxydhcp replies for at least the specified number of seconds.
@@ -11,15 +43,7 @@ Index: stage2/rootfs/etc/dnsmasq.conf
 +#dhcp-mac=set:client_is_a_pi,B8:27:EB:*:*:*
 +#dhcp-reply-delay=tag:client_is_a_pi,2
 +interface=wlan0
-+dhcp-range=192.168.16.2,192.168.16.254,255.255.255.0,24h
++dhcp-range=172.16.16.2,172.16.16.254,12h
++expand-hosts
 +domain=pirouter
-+address=/gw.pirouter/192.168.16.1
-Index: stage2/rootfs/etc/default/dnsmasq
-===================================================================
---- stage2.orig/rootfs/etc/default/dnsmasq
-+++ stage2/rootfs/etc/default/dnsmasq
-@@ -31,3 +31,4 @@ CONFIG_DIR=/etc/dnsmasq.d,.dpkg-dist,.dp
- # /etc/dnsmasq.conf is not enough to override resolvconf if it is
- # installed: the line below must be uncommented.
- #IGNORE_RESOLVCONF=yes
-+DNSMASQ_EXCEPT=lo
++dhcp-option=3,172.16.16.1

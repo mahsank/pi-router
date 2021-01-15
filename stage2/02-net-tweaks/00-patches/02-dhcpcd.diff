@@ -7,11 +7,11 @@ Index: stage2/rootfs/etc/dhcpcd.conf
  
  # Inform the DHCP server of our hostname for DDNS.
 -hostname
-+#hostname # Default: Disabled manually
++# hostname # Default: Disabled manually
  
  # Use the hardware address of the interface for the Client ID.
 -clientid
-+#clientid # Default: Disabled manually
++# clientid # Default: Disabled manually
  # or
  # Use the same DUID + IAID as set in DHCPv6 for DHCPv4 ClientID as per RFC4361.
  # Some non-RFC compliant DHCP servers do not reply with this set.
@@ -20,41 +20,42 @@ Index: stage2/rootfs/etc/dhcpcd.conf
  
  # Persist interface configuration when dhcpcd exits.
 -persistent
-+#persistent # Default: Disabled manually
++# persistent # Default: Disabled manually
  
  # Rapid commit support.
  # Safe to enable by default because it requires the equivalent option set
  # on the server to actually work.
 -option rapid_commit
-+#option rapid_commit # Default: Disabled manually
++# option rapid_commit # Default: Disabled manually
  
  # A list of options to request from the DHCP server.
- option domain_name_servers, domain_name, domain_search, host_name
- option classless_static_routes
+-option domain_name_servers, domain_name, domain_search, host_name
+-option classless_static_routes
++# option domain_name_servers, domain_name, domain_search, host_name # Default: Disabled manually
++# option classless_static_routes # Default: Disabled manually
  # Respect the network MTU. This is applied to DHCP routes.
 -option interface_mtu
-+#option interface_mtu # Default: Disabled manually
++# option interface_mtu # Default: Disabled manually
  
  # Most distributions have NTP support.
  #option ntp_servers
  
  # A ServerID is required by RFC2131.
 -require dhcp_server_identifier
-+#require dhcp_server_identifier # Default: Disabled manually
++# require dhcp_server_identifier # Default: Disabled manually
  
  # Generate SLAAC address using the Hardware Address of the interface
  #slaac hwaddr
  # OR generate Stable Private IPv6 Addresses based from the DUID
 -slaac private
-+#slaac private # Default: Disabled manually
++# slaac private # Default: Disabled manually
  
  # Example static IP configuration:
  #interface eth0
-@@ -57,3 +57,7 @@ slaac private
+@@ -57,3 +57,6 @@ slaac private
  # fallback to static profile on eth0
  #interface eth0
  #fallback static_eth0
 +interface wlan0
-+    static ip_address=192.168.16.1/24
-+    static domain_name_servers=192.168.16.1
-+    nohook wpa_supplicant
++static ip_address=172.16.16.1/24
++nohook wpa_supplicant
