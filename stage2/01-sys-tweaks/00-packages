@@ -28,3 +28,4 @@ rpi-eeprom
 raspinfo
 hostapd
 nftables
+dnscrypt-proxy

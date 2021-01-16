@@ -3,3 +3,5 @@
 03-dnsmasq.diff
 04-hostapd.diff
 05-nftables.diff
+06-dnscrypt-a.diff
+06-dnscrypt-b.diff

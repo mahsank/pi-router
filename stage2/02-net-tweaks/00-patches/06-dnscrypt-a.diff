@@ -1,0 +1,12 @@
+Index: stage2/rootfs/etc/dnscrypt-proxy/dnscrypt-proxy.toml
+===================================================================
+--- stage2.orig/rootfs/etc/dnscrypt-proxy/dnscrypt-proxy.toml
++++ stage2/rootfs/etc/dnscrypt-proxy/dnscrypt-proxy.toml
+@@ -1,6 +1,6 @@
+ # Empty listen_addresses to use systemd socket activation
+ listen_addresses = []
+-server_names = ['cloudflare']
++#server_names = ['cloudflare']
+ 
+ [query_log]
+   file = '/var/log/dnscrypt-proxy/query.log'
