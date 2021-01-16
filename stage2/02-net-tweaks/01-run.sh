@@ -16,7 +16,7 @@ install -v -m 644 files/inet-filter.nft         "${ROOTFS_DIR}/etc/nftables/"
 #dnscrypt-proxy configuration
 install -v -m 644 files/resolv.conf              "${ROOTFS_DIR}/etc/"
 on_chroot <<EOF
-if [ ! -z /etc/systemd/system/dnscrypt-proxy.socket ]; then
+if [ ! -s /etc/systemd/system/dnscrypt-proxy.socket ]; then
     $CP /lib/systemd/system/dnscrypt-proxy.socket /etc/systemd/system/
 fi
 EOF
