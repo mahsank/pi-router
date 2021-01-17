@@ -1,7 +1,7 @@
-Index: 2021-01-17-pirouter/stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
+Index: stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
 ===================================================================
---- 2021-01-17-pirouter.orig/stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
-+++ 2021-01-17-pirouter/stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
+--- stage2.orig/rootfs/etc/systemd/system/dnscrypt-proxy.socket
++++ stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
 @@ -8,6 +8,8 @@ Wants=dnscrypt-proxy-resolvconf.service
  [Socket]
  ListenStream=127.0.2.1:53

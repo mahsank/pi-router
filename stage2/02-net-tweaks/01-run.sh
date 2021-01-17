@@ -15,11 +15,6 @@ install -v -m 644 files/inet-filter.nft         "${ROOTFS_DIR}/etc/nftables/"
 
 #dnscrypt-proxy configuration
 install -v -m 644 files/resolv.conf              "${ROOTFS_DIR}/etc/"
-on_chroot <<EOF
-if [ ! -s /etc/systemd/system/dnscrypt-proxy.socket ]; then
-    $CP /lib/systemd/system/dnscrypt-proxy.socket /etc/systemd/system/
-fi
-EOF
 
 # hostapd configuration
 CONF_FILE="files/hostapd.conf"
@@ -36,11 +31,13 @@ do
 done
 install -v -m 600 files/hostapd.conf            "${ROOTFS_DIR}/etc/hostapd/"
 
-# enable debugging via serial port                                                                                                                                        
+# enable debugging via serial port
+on_chroot << EOF
 if [ "${ENABLE_DEBUG}" == "1" ]; then
-    if [ ! $($GREP "enable_uart=1" "${ROOTFS_DIR}/boot/config.txt") ]; then
-        echo >> "${ROOTFS_DIR}/boot/config.txt"
-        echo "# enable serial port" >> "${ROOTFS_DIR}/boot/config.txt"
-        echo "enable_uart=1" >> "${ROOTFS_DIR}/boot/config.txt"
+    if [ ! $($GREP "enable_uart=1" "/boot/config.txt") ]; then
+        echo >> "/boot/config.txt"
+        echo "# enable serial port" >> "/boot/config.txt"
+        echo "enable_uart=1" >> "/boot/config.txt"
     fi
 fi
+EOF

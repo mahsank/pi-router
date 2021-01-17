@@ -65,4 +65,10 @@ on_chroot << EOF
 usermod --pass='*' root
 EOF
 
+on_chroot << EOF
+if [ ! -s /etc/systemd/system/dnscrypt-proxy.socket ]; then
+    cp /lib/systemd/system/dnscrypt-proxy.socket /etc/systemd/system/
+fi
+EOF
+
 rm -f "${ROOTFS_DIR}/etc/ssh/"ssh_host_*_key*
