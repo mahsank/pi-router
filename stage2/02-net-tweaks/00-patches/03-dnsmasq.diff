@@ -43,7 +43,7 @@ Index: stage2/rootfs/etc/dnsmasq.conf
 +#dhcp-mac=set:client_is_a_pi,B8:27:EB:*:*:*
 +#dhcp-reply-delay=tag:client_is_a_pi,2
 +interface=wlan0
-+dhcp-range=172.16.16.2,172.16.16.254,12h
++dhcp-range=172.31.31.2,172.31.31.254,12h
 +expand-hosts
 +domain=pirouter
-+dhcp-option=3,172.16.16.1
++dhcp-option=3,172.31.31.1

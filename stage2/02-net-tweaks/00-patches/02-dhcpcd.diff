@@ -57,5 +57,5 @@ Index: stage2/rootfs/etc/dhcpcd.conf
  #interface eth0
  #fallback static_eth0
 +interface wlan0
-+static ip_address=172.16.16.1/24
++static ip_address=172.31.31.1/24
 +nohook wpa_supplicant

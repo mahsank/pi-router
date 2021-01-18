@@ -1,15 +1,16 @@
-# PiRouter
+# Pi-router
 
-PiRouter is a tool used to generate a custom raspbian image that transforms an `RPi`(tested on `RPi` 4) board into a secure router(strictly
-speaking an access point). PiRouter is derived from [pi-gen](https://github.com/RPi-Distro/pi-gen) and is based on 
+Pi-router is a tool used to generate a custom raspbian image that transforms an `RPi`(tested on `RPi` 4) board into a secure router(strictly
+speaking an access point). Pi-router is derived from [pi-gen](https://github.com/RPi-Distro/pi-gen) and is based on 
 [2020-12-02](https://github.com/RPi-Distro/pi-gen/releases/tag/2020-12-02-raspbian-buster) release.
-`PiRouter` is secured with [nftables](https://wiki.nftables.org).
+
+`Pi-router` is secured with [nftables](https://wiki.nftables.org) and [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy).
 
 ## Dependencies
 
-PiRouter build is tested with Debian *buster* and Fedora *33*.
+Pi-router build is tested with Debian *buster* and Fedora *33*.
 
-To install the required dependencies for PiRouter on Debian *buster*, run:
+To install the required dependencies for pi-router on Debian *buster*, run:
 
 ```bash
 $ apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree \
@@ -23,7 +24,7 @@ $ dnf install coreutils quilt parted qemu-user-static debootstrap zerofree \
 zip dosfstools bsdtar libcap grep rsync xz file git curl bc
 ```
 
-Other distributions should work but not tested. Feel free to give `PiRouter` a spin on your favorite distro and let me
+Other distributions should work but not tested. Feel free to give `pi-router` a spin on your favorite distro and let me
 know the results.
 
 ## Router-Config
@@ -48,7 +49,7 @@ The following environment variables are supported:
 - `RELEASE` (Default: `buster`)
 
   The release version to build image against. Valid values are `jessie`, `stretch`, `buster`, `bullseye`, and `testing`.
-  Note that `PiRouter` is tested with `buster` only.
+  Note that `pi-router` is tested with `buster` only.
 
 - `APT_PROXY` (Default: unset)
 
@@ -63,7 +64,7 @@ The following environment variables are supported:
 
 - `BASE_DIR` (Default location of `build.sh`)
 
-  This is the top-level directory for `PiRouter`. It contains `stage` directories, build scripts, and by default both `work` and
+  This is the top-level directory for `pi-router`. It contains `stage` directories, build scripts, and by default both `work` and
 `deploy` directories. Changing this variable is not recommended.
 
 - `SCRIPT_DIR`
@@ -72,7 +73,7 @@ The following environment variables are supported:
 
 - `WORK_DIR` (Default: `"$BASE_DIR/work"`)
 
-  Directory in which `PiRouter` builds the target system. This value can be changed if a sufficiently large, fast, storage
+  Directory in which `pi-router` builds the target system. This value can be changed if a sufficiently large, fast, storage
 location is available for running build stages and caching purposes. It is important to note that `WORK_DIR` stores a
 complete copy of the target system for each build stage and it can grow extremely rapidly. This will result in hogging
 the storage space quickly. If you are building frequently, periodic cleaning of this directory is recommended.
@@ -125,7 +126,7 @@ the storage space quickly. If you are building frequently, periodic cleaning of 
 
   If set, then instead of working through the numeric stages in order, this list will be followed. For example, setting to
 "stage0 stage1 mystage stage2" will run the contents of "mystage" before "stage2". Note the quotes, they are needed
-around the list. An absolute or relative path can be given for stages outside the `PiRouter` directory.
+around the list. An absolute or relative path can be given for stages outside the `pi-router` directory.
 
 A minimal `router-config` file is included in the build and is the default for `build.sh`.If needed, this file can be customized further.
 
@@ -205,21 +206,21 @@ The build process is divided up into several stages for logical clarity and modu
 
 **Stage 2** - router system. This stage produces the router image. It installs some optimized memory functions, sets timezone and charmap defaults, installs fake-hwclock and ntp, wireless LAN and bluetooth support, dphys-swapfile, and other basics for managing the hardware. It also creates necessary groups and gives the pi user access to sudo and the standard console hardware permission groups.
 
-All the customizations needed to transform `RPi`  into a secure router are done at this stage. Contrary to `pi-gen` build stages, `PiRouter` does not need to go beyond this stage.
+All the customizations needed to transform `RPi`  into a secure router are done at this stage. Contrary to `pi-gen` build stages, `pi-router` does not need to go beyond this stage.
 
 ## Network Configuration Details
 
-`PiRouter` makes use of `dnsmasq`, `dhcpcd`, and `hostapd` to transform the `RPi` into a router. The default LAN side gateway ip address is `192.168.16.1/24` and the connected clients are assigned addresses in the range of `192.168.16.2-254`. WAN side address is supplied by the RJ-45 connector on `RPi` board.
+`Pi-router` makes use of `dnsmasq`, `dhcpcd`, and `hostapd`, to transform the `RPi` into a router. The default LAN side gateway ip address is `172.31.31.1/24` and the connected clients are assigned addresses in the range of `172.131.31.2-254`. WAN side address is supplied by the RJ-45 connector on `RPi` board.
 
 ## Known Limitations
 
-`PiRouter` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
+`Pi-router` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
 
 ## Troubleshooting
 
 ### binfmt_misc
 
-Linux is able execute binaries from other architectures, meaning that it should be possible to make use of `PiRouter` on an `x86_64` system, even though it will be running *ARM* binaries. This requires support from the `binfmt_misc` kernel module.
+Linux is able execute binaries from other architectures, meaning that it should be possible to make use of `pi-router` on an `x86_64` system, even though it will be running *ARM* binaries. This requires support from the `binfmt_misc` kernel module.
 
 You may see the following error:
 
