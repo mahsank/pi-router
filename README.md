@@ -210,7 +210,7 @@ All the customizations needed to transform `RPi`  into a secure router are done 
 
 ## Network Configuration Details
 
-`Pi-router` makes use of `dnsmasq`, `dhcpcd`, and `hostapd`, to transform the `RPi` into a router. The default LAN side gateway ip address is `172.31.31.1/24` and the connected clients are assigned addresses in the range of `172.131.31.2-254`. WAN side address is supplied by the RJ-45 connector on `RPi` board.
+`Pi-router` makes use of `dnsmasq`, `dhcpcd`, and `hostapd`, to transform the `RPi` into a router. The default LAN side gateway ip address is `172.31.31.1/24` and the connected clients are assigned addresses in the range of `172.31.31.2-254`. WAN side address is supplied by the RJ-45 connector on `RPi` board.
 
 ## Known Limitations
 
