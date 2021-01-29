@@ -7,5 +7,4 @@ systemctl mask systemd-resolved.service
 systemctl enable dnscrypt-proxy.service
 systemctl enable nftables.service
 
-
 EOF

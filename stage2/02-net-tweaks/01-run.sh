@@ -13,9 +13,6 @@ install -v -d					"${ROOTFS_DIR}/etc/nftables"
 install -v -m 644 files/inet-nat.nft            "${ROOTFS_DIR}/etc/nftables/"
 install -v -m 644 files/inet-filter.nft         "${ROOTFS_DIR}/etc/nftables/"
 
-#dnscrypt-proxy configuration
-install -v -m 644 files/resolv.conf              "${ROOTFS_DIR}/etc/"
-
 # hostapd configuration
 CONF_FILE="files/hostapd.conf"
 SED=$(command -v \sed)
