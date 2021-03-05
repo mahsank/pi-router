@@ -18,7 +18,7 @@ $ unzip 2021-03-01-pirouter.zip
 ```bash
 $ sudo dd if=2021-03-01-pirouter.img of=/dev/mmcblk0 bs=4M status=progress conv=fdatasync
 ```
-- Insert the card into sd card slot of RPi board, boot and you should be good to go.
+- Insert the card into sd card slot of RPi board, boot and you should be good to go. Login password is `Ra5pb3rry`.
 
 - Optional: It might be helpful to read the section [Network Configuration Details](#network-configuration-details).
 
