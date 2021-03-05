@@ -1,10 +1,26 @@
 # Pi-router
 
-Pi-router is a tool used to generate a custom raspbian image that transforms an `RPi`(tested on `RPi` 4) board into a secure router(strictly
-speaking an access point). Pi-router is derived from [pi-gen](https://github.com/RPi-Distro/pi-gen) and is based on 
+Pi-router is a tool used to generate a custom Raspberry Pi OS image that transforms an `RPi`(tested on `RPi` 4) board into a secure router(strictly
+speaking an access point). Pi-router is derived from [pi-gen](https://github.com/RPi-Distro/pi-gen) and is based on
 [2020-12-02](https://github.com/RPi-Distro/pi-gen/releases/tag/2020-12-02-raspbian-buster) release.
 
 `Pi-router` is secured with [nftables](https://wiki.nftables.org) and [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy).
+
+## TL;DR
+
+- Grab the binary package from [here](https://github.com/mahsank/pi-router/releases/download/v1.0/2021-03-01-pirouter.zip) and unzip it.
+
+```bash
+$ unzip 2021-03-01-pirouter.zip
+```
+- Dump the image on an sd card.
+
+```bash
+$ sudo dd if=2021-03-01-pirouter.img of=/dev/mmcblk0 bs=4M status=progress conv=fdatasync
+```
+- Insert the card into sd card slot of RPi board, boot and you should be good to go.
+
+- Optional: It might be helpful to read the section [Network Configuration Details](#network-configuration-details).
 
 ## Dependencies
 
@@ -38,7 +54,7 @@ The following environment variables are supported:
 
   Date on which the image is built.
 
-- `IMG_FILENAME` 
+- `IMG_FILENAME`
 
   Combination of `IMG_DATE` and `IMG_NAME`(defined in `router-config`).
 
@@ -56,7 +72,7 @@ The following environment variables are supported:
   If you need to use apt proxy, set it here. The proxy setting will not be included in the image, making it safe to use an `apt-cacher` or similar package for development.
 
   If Docker is installed, it is possible to set up a local apt caching proxy to speed up subsequent builds like this:
-  
+
   ```bash
   $ docker-compose up -d
   $ echo 'APT_PROXY=http://172.17.0.1:3142' >> router-config
@@ -106,7 +122,7 @@ the storage space quickly. If you are building frequently, periodic cleaning of 
 
 - `WPA_PASSWORD` (Default: `3T01F24h15h~`)
 
-- `WPA_COUNTRY` (Default: `fi`) 
+- `WPA_COUNTRY` (Default: `fi`)
 
   This value should be changed with the corresponding two letters country code.
 
