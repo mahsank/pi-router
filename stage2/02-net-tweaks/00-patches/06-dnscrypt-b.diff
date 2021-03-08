@@ -9,8 +9,8 @@ Index: stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
 -ListenStream=127.0.2.1:53
 -ListenDatagram=127.0.2.1:53
 +ListenStream=127.0.2.1:5300
-+ListenStream=127.0.2.1:5300
-+ListenDatagram=[::1]:5300
++ListenDatagram=127.0.2.1:5300
++ListenStream=[::1]:5300
 +ListenDatagram=[::1]:5300
  NoDelay=true
  DeferAcceptSec=1
