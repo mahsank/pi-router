@@ -13,8 +13,8 @@ table inet filter {
         iif lo accept
         iif != lo ip daddr 127.0.0.1/8 counter drop
         iif != lo ip6 daddr ::1/128 counter drop
-        iifname "wlan0" tcp dport 22 accept
-        iifname "wlan0" udp dport {53, 67} accept
+        iifname "wlan0" tcp dport { 22, 53 } accept
+        iifname "wlan0" udp dport { 53, 67 } accept
     }
     # allow packets from lan to wan
     # allow from wan to lan (provided that lan initiated the connection)

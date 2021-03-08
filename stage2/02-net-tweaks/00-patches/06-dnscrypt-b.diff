@@ -2,12 +2,16 @@ Index: stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
 ===================================================================
 --- stage2.orig/rootfs/etc/systemd/system/dnscrypt-proxy.socket
 +++ stage2/rootfs/etc/systemd/system/dnscrypt-proxy.socket
-@@ -8,6 +8,8 @@ Wants=dnscrypt-proxy-resolvconf.service
+@@ -6,8 +6,10 @@ Wants=nss-lookup.target
+ Wants=dnscrypt-proxy-resolvconf.service
+ 
  [Socket]
- ListenStream=127.0.2.1:53
- ListenDatagram=127.0.2.1:53
-+ListenStream=[::1]:53
-+ListenDatagram=[::1]:53
+-ListenStream=127.0.2.1:53
+-ListenDatagram=127.0.2.1:53
++ListenStream=127.0.2.1:5300
++ListenStream=127.0.2.1:5300
++ListenDatagram=[::1]:5300
++ListenDatagram=[::1]:5300
  NoDelay=true
  DeferAcceptSec=1
  

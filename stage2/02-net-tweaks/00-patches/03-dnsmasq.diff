@@ -7,11 +7,11 @@ Index: stage2/rootfs/etc/dnsmasq.conf
  # (53). Setting this to zero completely disables DNS function,
  # leaving only DHCP and/or TFTP.
 -#port=5353
-+port=0
++port=53
  
  # The following two options make you a better netizen, since they
  # tell dnsmasq to filter out queries which the public DNS cannot
-@@ -55,11 +55,11 @@
+@@ -55,15 +55,17 @@
  # If you don't want dnsmasq to read /etc/resolv.conf or any other
  # file, getting its servers from this file instead (see below), then
  # uncomment this.
@@ -25,7 +25,13 @@ Index: stage2/rootfs/etc/dnsmasq.conf
  
  # Add other name servers here, with domain specs if they are for
  # non-public domains.
-@@ -105,7 +105,7 @@
+ #server=/localnet/192.168.0.1
++server=127.0.2.1#5300
++server=::1#5300
+ 
+ # Example of routing PTR queries to nameservers: this will send all
+ # address->name queries for 192.168.3/24 to nameserver 10.1.2.3
+@@ -105,7 +107,7 @@
  # Repeat the line for more than one interface.
  #interface=
  # Or you can specify which interface _not_ to listen on
@@ -34,7 +40,7 @@ Index: stage2/rootfs/etc/dnsmasq.conf
  # Or which to listen on by address (remember to include 127.0.0.1 if
  # you use this.)
  #listen-address=
-@@ -679,5 +679,10 @@
+@@ -679,5 +681,11 @@
  #dhcp-ignore-names=tag:wpad-ignore
  
  # Delays sending DHCPOFFER and proxydhcp replies for at least the specified number of seconds.
@@ -46,4 +52,5 @@ Index: stage2/rootfs/etc/dnsmasq.conf
 +dhcp-range=172.31.31.2,172.31.31.254,12h
 +expand-hosts
 +domain=pirouter
-+dhcp-option=3,172.31.31.1
++address=/gw.pirouter/172.31.31.1
++dhcp-option=6,172.31.31.1

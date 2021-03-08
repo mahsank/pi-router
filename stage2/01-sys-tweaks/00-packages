@@ -26,6 +26,7 @@ ntfs-3g
 pciutils
 rpi-eeprom
 raspinfo
+vim
 hostapd
 nftables
 dnscrypt-proxy
