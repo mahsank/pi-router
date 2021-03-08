@@ -8,7 +8,7 @@ speaking an access point). Pi-router is derived from [pi-gen](https://github.com
 
 ## TL;DR
 
-- Grab the binary package from [here](https://github.com/mahsank/pi-router/releases/download/v1.0/2021-03-01-pirouter.zip) and unzip it.
+- Grab the binary package from [here](https://github.com/mahsank/pi-router/releases/download/v1.0/image_2021-03-08-pirouter.zip) and unzip it.
 
 ```bash
 $ unzip 2021-03-01-pirouter.zip
@@ -19,6 +19,8 @@ $ unzip 2021-03-01-pirouter.zip
 $ sudo dd if=2021-03-01-pirouter.img of=/dev/mmcblk0 bs=4M status=progress conv=fdatasync
 ```
 - Insert the card into sd card slot of RPi board, boot and you should be good to go. Login password is `Ra5pb3rry`.
+
+- Change the two letter country code from `fi` to your country in `/etc/hostapd/hostapd.conf`.
 
 - Optional: It might be helpful to read the section [Network Configuration Details](#network-configuration-details).
 
