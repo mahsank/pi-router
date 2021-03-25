@@ -30,3 +30,6 @@ vim
 hostapd
 nftables
 dnscrypt-proxy
+ndppd
+radvd
+radvdump

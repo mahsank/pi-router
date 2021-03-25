@@ -3,6 +3,5 @@
 .pc
 *-pc
 router-config
-stage2/02-net-tweaks/file/hostapd.conf
 deploy/*
 work/*
