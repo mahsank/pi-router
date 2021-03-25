@@ -232,7 +232,9 @@ All the customizations needed to transform `RPi`  into a secure router are done 
 
 ## Known Limitations
 
-`Pi-router` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
+- `Pi-router` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
+
+- IPv6 support is not fully baked.
 
 ## Troubleshooting
 
