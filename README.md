@@ -26,7 +26,7 @@ $ sudo dd if=2021-03-08-pirouter.img of=/dev/mmcblk0 bs=4M status=progress conv=
 
 ## Dependencies
 
-Pi-router build is tested with Debian *buster* and Fedora *33*.
+Pi-router build is tested with Debian *buster*, Ubuntu *Focal Fossa*, and Fedora *33*.
 
 To install the required dependencies for pi-router on Debian *buster*, run:
 
@@ -34,8 +34,9 @@ To install the required dependencies for pi-router on Debian *buster*, run:
 $ apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree \
 zip dosfstools bsdtar libcap2-bin grep rsync xz-utils file git curl bc
 ```
+To achieve the same on Ubuntu *Focal Fossa*, replace the `bsdtar` package with `libarchive-tools`.
 
-To achieve the same on Fedora *33*, run:
+Similarly, on Fedora *33*, run:
 
 ```bash
 $ dnf install coreutils quilt parted qemu-user-static debootstrap zerofree \
@@ -100,9 +101,9 @@ the storage space quickly. If you are building frequently, periodic cleaning of 
 
   Output directory for target system image.
 
-- `DEPLOY_ZIP` (Default: 0)
+- `DEPLOY_ZIP` (Default: 1)
 
-  By default, the image is deployed only as a regular `iso` image.
+  By default, the image is deployed only as a compressed zip archive.
 
 - `LOG_FILE` (Default: `"$WORK_DIR/build.log"`)
 
