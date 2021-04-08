@@ -1,8 +1,8 @@
-# This is a basic workflow to help you get started with Actions
+# Workflow for pi-router ci pipeline
 
-name: Pi-router 
+name: Pi-router
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -22,14 +22,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: List contents
-        run: |
-          ls -a
-          sleep 10
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      # Cache dependencies
+
+      # This is WIP; Cache dependencies
       - name: Cache build dependencies
         uses: actions/cache@v2
         env:
@@ -42,13 +38,12 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-        
+
       # Install dependencies
       - name: Install dependencies
         run: |
           sudo apt-get install --assume-yes coreutils quilt parted qemu-user-static debootstrap zerofree \
           zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc
-
 
       # Runs a set of commands using the runners shell
       - name: Build pi-router
@@ -56,10 +51,11 @@ jobs:
           echo Building pi-router
           sudo ./build.sh
           echo Done.
-      
+
+      # Set current date as an environment
+
       # Save the artifacts
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: kittaakos/upload-artifact-as-is@v0
         with:
-          #name: image-archive
           path: deploy/*.zip
