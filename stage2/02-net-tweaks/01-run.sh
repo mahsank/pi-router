@@ -8,6 +8,8 @@ CP=$(command -v \cp)
 install -v -d					"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d"
 install -v -m 644 files/dhcpcd.service		"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/"
 
+install -m 644 files/dhcp6c.conf		"${ROOTFS_DIR}/etc/wide-dhcpv6/"
+
 install -v -d					"${ROOTFS_DIR}/etc/nftables"
 #nftables rules
 install -v -m 644 files/inet-nat.nft            "${ROOTFS_DIR}/etc/nftables/"

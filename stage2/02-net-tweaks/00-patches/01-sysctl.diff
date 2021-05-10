@@ -2,7 +2,7 @@ Index: stage2/rootfs/etc/sysctl.conf
 ===================================================================
 --- stage2.orig/rootfs/etc/sysctl.conf
 +++ stage2/rootfs/etc/sysctl.conf
-@@ -25,12 +25,12 @@
+@@ -25,13 +25,15 @@
  #net.ipv4.tcp_syncookies=1
  
  # Uncomment the next line to enable packet forwarding for IPv4
@@ -15,5 +15,8 @@ Index: stage2/rootfs/etc/sysctl.conf
 -#net.ipv6.conf.all.forwarding=1
 +net.ipv6.conf.all.forwarding=1
  
++# Accept IPv6 RA messages
++net.ipv6.conf.eth0.accept_ra=2
  
  ###################################################################
+ # Additional settings - these settings can improve the network
