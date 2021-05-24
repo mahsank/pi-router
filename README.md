@@ -1,10 +1,10 @@
 # Pi-router
 
-Pi-router is a tool used to generate a custom Raspberry Pi OS image that transforms an `RPi`(tested on `RPi` 4) board into a secure router(strictly
+Pi-router is a tool used to generate a custom Raspberry Pi OS image that transforms an `RPi` board into a secure router(strictly
 speaking an access point). Pi-router is derived from [pi-gen](https://github.com/RPi-Distro/pi-gen) and is based on
 [2020-12-02](https://github.com/RPi-Distro/pi-gen/releases/tag/2020-12-02-raspbian-buster) release.
 
-`Pi-router` is secured with [nftables](https://wiki.nftables.org) and [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy).
+The resultant Pi OS can be considered an alternative to [OpenWrt](https://openwrt.org/) for RPi boards. It is secured with [nftables](https://wiki.nftables.org) and [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy).
 
 ## TL;DR
 
