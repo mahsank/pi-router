@@ -235,7 +235,8 @@ All the customizations needed to transform `RPi`  into a secure router are done 
 
 - `Pi-router` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
 
-- DHCPv6 support is work in progress.
+- DHCPv6 support is experimental. In case there is no valid global IPv6 address assigned to WAN interface, `dhcpv6-client` service
+  will fail.
 
 ## Troubleshooting
 
