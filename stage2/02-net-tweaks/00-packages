@@ -3,5 +3,5 @@ raspberrypi-net-mods
 dhcpcd5
 net-tools
 tcpdump
-bind9utils
+dnsutils
 wide-dhcpv6-client
