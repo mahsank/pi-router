@@ -40,7 +40,20 @@ Index: stage2/rootfs/etc/dnsmasq.conf
  # Or which to listen on by address (remember to include 127.0.0.1 if
  # you use this.)
  #listen-address=
-@@ -679,5 +681,11 @@
+@@ -214,7 +216,11 @@
+ # advertisements will have the M and O bits set, so that the clients
+ # get addresses and configuration from DHCPv6, and the A bit reset, so the 
+ # clients don't use SLAAC addresses.
+-#enable-ra
++enable-ra
++
++# Construct a valid IPv6 range from reading the address set on the interface.
++# The ::1 part refers to the ifid in dhcp6c.conf.
++dhcp-range=tag:wlan0,::1,constructor:wlan0, ra-names, 12h
+ 
+ # Supply parameters for specified hosts using DHCP. There are lots
+ # of valid alternatives, so we will give examples of each. Note that
+@@ -679,5 +685,11 @@
  #dhcp-ignore-names=tag:wpad-ignore
  
  # Delays sending DHCPOFFER and proxydhcp replies for at least the specified number of seconds.
