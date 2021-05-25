@@ -1,0 +1,11 @@
+RELEASED:
+  * Experimental DHCPv6 support for clients connected to `pisecrouter`not fully
+  * Enforce default password change on first login
+  * Introduce CI/CD pipeline to streamline the changes
+2021-03-08: v1.0
+  * Initial release
+  * Enable UART for debugging purposes
+  * Use TCP/UDP sockets with dnscrypt-proxy
+  * Use dnscrypt-proxy to secure DNS queries
+  * Use NFT rules to secure network communication
+  * Add a bit of complexity in the default login password
