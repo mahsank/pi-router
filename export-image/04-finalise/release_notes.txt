@@ -1,4 +1,4 @@
-UNRELEASED
+2021-06-30: v1.4
   * Enable debugging via UART and SPI
   * Experimental DHCPv6 support for clients connected to `pisecrouter`
   * Enforce default password change on first login
