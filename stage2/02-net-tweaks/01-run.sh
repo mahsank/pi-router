@@ -26,17 +26,25 @@ for i in $(seq 0 2)
 do
     if [ $($GREP "${HOSTAPD_VARS[$i]}=$" "${CONF_FILE}") ]; then
         $SED -i "s/\(^${HOSTAPD_VARS[$i]}=\)/&${HOSTAPD_VALS[$i]}/" $CONF_FILE
-    fi  
+    fi
 done
 install -v -m 600 files/hostapd.conf            "${ROOTFS_DIR}/etc/hostapd/"
 
-# enable debugging via serial port
-on_chroot << EOF
+# enable debugging
 if [ "${ENABLE_DEBUG}" == "1" ]; then
-    if [ ! $($GREP "enable_uart=1" "/boot/config.txt") ]; then
-        echo >> "/boot/config.txt"
-        echo "# enable serial port" >> "/boot/config.txt"
-        echo "enable_uart=1" >> "/boot/config.txt"
+on_chroot << "EOF"
+    GREP=$(command -v \grep)
+    SED=$(command -v \sed)
+    CONFIG="/boot/config.txt"
+    # enable debugging via serial port
+    if [ ! $("$GREP" "enable_uart=1" "$CONFIG") ]; then
+        echo >> "$CONFIG"
+        echo "# enable serial port" >> "$CONFIG"
+        echo "enable_uart=1" >> "$CONFIG"
     fi
-fi
+    # enable debugging via spi
+    if [ ! $(grep "^dtparam=spi=on$" "$CONFIG") ]; then
+        $SED -i 's/#dtparam=spi/dtparam=spi/g' "$CONFIG"
+    fi
 EOF
+fi
