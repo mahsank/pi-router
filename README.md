@@ -8,19 +8,21 @@ The resultant Pi OS can be considered an alternative to [OpenWrt](https://openwr
 
 ## TL;DR
 
-- Grab the binary package from [here](https://github.com/mahsank/pi-router/releases/download/v1.0/image_2021-03-08-pirouter.zip) and unzip it.
+- Grab the binary package from [here](https://github.com/mahsank/pi-router/releases/download/v1.4/image_2021-06-29-pirouter.zip) and unzip it.
 
-```bash
-$ unzip image_2021-03-08-pirouter.zip
-```
+  ```bash
+  $ unzip image_2021-06-29-pirouter.zip
+  ```
 - Dump the image on an sd card.
 
-```bash
-$ sudo dd if=2021-03-08-pirouter.img of=/dev/mmcblk0 bs=4M status=progress conv=fdatasync
-```
-- Insert the card into sd card slot of RPi board, boot and you should be good to go. Login password is `Ra5pb3rry`.
+  ```bash
+  $ sudo dd if=2021-06-29-pirouter.img of=/dev/mmcblk0 bs=4M status=progress conv=fdatasync
+  ```
+- Mount the sd card and change the two letter country code from `fi` to your home country in `/etc/hostapd/hostapd.conf`.
 
-- Change the two letter country code from `fi` to your country in `/etc/hostapd/hostapd.conf`.
+- Unmount and take the sd card out.
+
+- Insert the card into sd card slot of RPi board and boot. Login password is `Ra5pb3rry`.
 
 - Optional: It might be helpful to read the section [Network Configuration Details](#network-configuration-details).
 
