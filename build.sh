@@ -164,10 +164,10 @@ export LOG_FILE="${WORK_DIR}/build.log"
 export ENABLE_DEBUG="${ENABLE_DEBUG:-0}"
 
 export TARGET_HOSTNAME=${TARGET_HOSTNAME:-rpirouter}
-
 export FIRST_USER_NAME=${FIRST_USER_NAME:-pi}
 export FIRST_USER_PASS=${FIRST_USER_PASS:-Ra5pb3rry}
 export RELEASE=${RELEASE:-buster}
+export WAN_INTERFACE=${WAN_INTERFACE:-eth0}
 export WPA_ESSID=${WPA_ESSID:-pisecrouter}
 export WPA_PASSWORD=${WPA_PASSWORD:-3T01F24h15h~}
 export WPA_COUNTRY=${WPA_COUNTRY:-fi}
