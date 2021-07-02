@@ -235,7 +235,7 @@ All the customizations needed to transform `RPi`  into a secure router are done 
 
 ## Known Limitations
 
-- `Pi-router` does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports.
+- `Pi-router` ~~does not handle the case of WAN side address supplied by a *USB to RJ-45* dongle plugged into one of the four `RPi` USB ports~~ supports WAN side address supplied by a USB to RJ-45 dongle with certain limitations. The support is limited to those ethernet to USB adapters whose drivers are built into the kernel and is available in `mak-dev` branch. In order to test, define (usually `eth1`) `WAN_INTERFACE` in `router-config` and run the `build` script. It is important to keep in mind that the support is of *alpha* quality.
 
 - DHCPv6 support is experimental. In case there is no valid global IPv6 address assigned to WAN interface, `dhcpv6-client` service
   will fail.
