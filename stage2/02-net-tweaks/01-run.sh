@@ -1,14 +1,26 @@
 #!/bin/bash -e
 
-GREP="$(command -v \grep)"
+GREP=$(command -v \grep)
 
+# wan interface configuration for usb attached ethernet adapter usually named as `eth1`
+if [ "${WAN_INTERFACE}" !=  "eth0" ]; then
+    $SED -i "s/eth0/${WAN_INTERFACE}/" 00-debconf
+    DIR_NAMES=("00-patches" "files")
+    for j in $(seq 0 1)
+    do
+        for k in $(ls "${DIR_NAMES[$j]}")
+        do
+            $SED -i "s/eth0/${WAN_INTERFACE}/g" "${DIR_NAMES[$j]}/$k"
+        done
+    done
+fi
 
-install -v -d					"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d"
-install -v -m 644 files/dhcpcd.service		"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/"
+install -v -d                                   "${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d"
+install -v -m 644 files/dhcpcd.service          "${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/"
 
-install -m 644 files/dhcp6c.conf		"${ROOTFS_DIR}/etc/wide-dhcpv6/"
+install -m 644 files/dhcp6c.conf                "${ROOTFS_DIR}/etc/wide-dhcpv6/"
 
-install -v -d					"${ROOTFS_DIR}/etc/nftables"
+install -v -d                                   "${ROOTFS_DIR}/etc/nftables"
 #nftables rules
 install -v -m 644 files/inet-nat.nft            "${ROOTFS_DIR}/etc/nftables/"
 install -v -m 644 files/inet-filter.nft         "${ROOTFS_DIR}/etc/nftables/"
