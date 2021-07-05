@@ -1,14 +1,14 @@
 #!/bin/bash -e
 
-GREP=$(command -v \grep)
+GREP="$(command -v \grep)"
 
 # wan interface configuration for usb attached ethernet adapter usually named as `eth1`
 if [ "${WAN_INTERFACE}" !=  "eth0" ]; then
     $SED -i "s/eth0/${WAN_INTERFACE}/" 00-debconf
     DIR_NAMES=("00-patches" "files")
-    for j in $(seq 0 1)
+    for j in 0 1
     do
-        for k in $(ls "${DIR_NAMES[$j]}")
+        for k in "${DIR_NAMES[$j]}"/*
         do
             $SED -i "s/eth0/${WAN_INTERFACE}/g" "${DIR_NAMES[$j]}/$k"
         done
