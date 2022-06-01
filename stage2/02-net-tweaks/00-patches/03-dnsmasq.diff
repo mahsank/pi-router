@@ -53,12 +53,11 @@ Index: stage2/rootfs/etc/dnsmasq.conf
  
  # Supply parameters for specified hosts using DHCP. There are lots
  # of valid alternatives, so we will give examples of each. Note that
-@@ -679,5 +685,11 @@
+@@ -677,3 +683,12 @@
+ # This fixes a security hole. see CERT Vulnerability VU#598349
+ #dhcp-name-match=set:wpad-ignore,wpad
  #dhcp-ignore-names=tag:wpad-ignore
- 
- # Delays sending DHCPOFFER and proxydhcp replies for at least the specified number of seconds.
--dhcp-mac=set:client_is_a_pi,B8:27:EB:*:*:*
--dhcp-reply-delay=tag:client_is_a_pi,2
++
 +#dhcp-mac=set:client_is_a_pi,B8:27:EB:*:*:*
 +#dhcp-reply-delay=tag:client_is_a_pi,2
 +interface=wlan0
