@@ -1,0 +1,10 @@
+v1.4, released June 30, 2021
+
+    * Enabled debugging via UART and SPI
+    * Experimental DHCPv6 support for connected clients
+    * Enforced default password change on first login
+    * Implemented actions to streamline testing of changes via CI/CD
+
+v1.0, released March 8, 2021
+
+    * Initial release
