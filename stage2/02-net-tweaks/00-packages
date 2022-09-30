@@ -5,3 +5,4 @@ net-tools
 tcpdump
 dnsutils
 wide-dhcpv6-client
+freeradius
