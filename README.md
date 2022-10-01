@@ -28,9 +28,9 @@ The resultant Pi OS can be considered an alternative to [OpenWrt](https://openwr
 
 ## Dependencies
 
-Pi-router build is tested with Debian *buster*, Ubuntu *Focal Fossa*, and Fedora *33*.
+Pi-router build is tested with Debian *bullseye*, *buster*, Ubuntu *Focal Fossa*, and Fedora *33*.
 
-To install the required dependencies for pi-router on Debian *buster*, run:
+To install the required dependencies for pi-router on Debian, *bullseye*, *buster*, run:
 
 ```bash
 $ apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree \
