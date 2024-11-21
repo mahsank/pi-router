@@ -1,5 +1,3 @@
 #!/bin/bash -e
 
-if [ ! -d "${ROOTFS_DIR}" ]; then
-	copy_previous
-fi
+[ ! -d "${ROOTFS_DIR}" ] && copy_previous

@@ -1,5 +1,3 @@
 #!/bin/bash -e
 
-if [ ! -d "${ROOTFS_DIR}" ]; then
-	bootstrap ${RELEASE} "${ROOTFS_DIR}" http://raspbian.raspberrypi.org/raspbian/
-fi
+[ ! -d "${ROOTFS_DIR}" ] && bootstrap "${RELEASE}" "${ROOTFS_DIR}" http://raspbian.raspberrypi.org/raspbian/
