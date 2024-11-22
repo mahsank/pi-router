@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -53,7 +53,7 @@ jobs:
       - name: Build pi-router
         run: |
           echo Building pi-router
-          sudo ./build.sh
+          sudo bash ./build.sh
           echo Done.
 
       # Save the artifacts
