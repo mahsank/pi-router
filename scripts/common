@@ -10,7 +10,7 @@ bootstrap(){
 	export http_proxy=${APT_PROXY}
 
 	if [ "$(dpkg --print-architecture)" !=  "armhf" ] && [ "$(dpkg --print-architecture)" !=  "aarch64" ]; then
-		BOOTSTRAP_CMD=qemu-debootstrap
+		BOOTSTRAP_CMD=debootstrap
 	fi
 
 	BOOTSTRAP_ARGS+=(--arch armhf)

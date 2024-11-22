@@ -2,13 +2,13 @@
 
 # wan interface configuration for usb attached ethernet adapter usually named as `eth1`
 if [ "${WAN_INTERFACE}" != "eth0" ]; then
-	sed -i "s/eth0/${WAN_INTERFACE}/" 00-debconf
-	DIR_NAMES=("00-patches" "files")
-	for j in 0 1; do
-		for k in "${DIR_NAMES[$j]}"/*; do
-			sed -i "s/eth0/${WAN_INTERFACE}/g" "${DIR_NAMES[$j]}/$k"
-		done
-	done
+  sed -i "s/eth0/${WAN_INTERFACE}/" 00-debconf
+  DIR_NAMES=("00-patches" "files")
+  for j in 0 1; do
+    for k in "${DIR_NAMES[$j]}"/*; do
+      sed -i "s/eth0/${WAN_INTERFACE}/g" "${DIR_NAMES[$j]}/$k"
+    done
+  done
 fi
 
 install -v -d "${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d"
@@ -22,20 +22,18 @@ install -v -m 644 files/inet-nat.nft "${ROOTFS_DIR}/etc/nftables/"
 install -v -m 644 files/inet-filter.nft "${ROOTFS_DIR}/etc/nftables/"
 
 # hostapd configuration
-CONF_FILE="files/hostapd.conf"
 HOSTAPD_VARS=("country_code" "ssid" "wpa_passphrase")
 HOSTAPD_VALS=("$WPA_COUNTRY" "$WPA_ESSID" "$WPA_PASSWORD")
 
 for i in $(seq 0 2); do
-	if grep -q "${HOSTAPD_VARS[$i]}=$" "${CONF_FILE}" 2>/dev/null; then
-		sed -i "s/\(^${HOSTAPD_VARS[$i]}=\)/&${HOSTAPD_VALS[$i]}/" $CONF_FILE
-	fi
+  if grep -q "${HOSTAPD_VARS[$i]}=$" "files/hostapd.conf" 2>/dev/null; then
+    sed -i "s/\(^${HOSTAPD_VARS[$i]}=\)/&${HOSTAPD_VALS[$i]}/" "files/hostapd.conf"
+  fi
 done
 install -v -m 600 files/hostapd.conf "${ROOTFS_DIR}/etc/hostapd/"
 
 # enable debugging
-[ "${ENABLE_DEBUG}" == "1" ] &&
-	on_chroot <<"EOF"
+[ "${ENABLE_DEBUG}" == "1" ] && on_chroot <<"EOF"
 CONFIG="/boot/config.txt"
 # enable debugging via serial port
 if ! grep -q "enable_uart=1" "$CONFIG")" 2> /dev/null; then
