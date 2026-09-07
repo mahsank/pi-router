@@ -4,11 +4,18 @@ name: Pi-router
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Triggers the workflow on push or pull request events for all branches.
+  # Doc-only changes don't trigger the build to save runner minutes.
   push:
-    branches: [master]
+    branches:
+      - "**"
+    paths-ignore:
+      - "**.md"
   pull_request:
-    branches: [master]
+    branches:
+      - "**"
+    paths-ignore:
+      - "**.md"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -18,7 +25,11 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+
+    # Minimal permissions to avoid token-related warnings
+    permissions:
+      contents: read
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -27,11 +38,18 @@ jobs:
           ls -a
           sleep 10
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      # Cache dependencies
-      - name: Cache build dependencies
-        uses: actions/cache@v4
+      # Node.js LTS version
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      # Restore apt cache before installing dependencies
+      - name: Restore build dependencies
+        uses: actions/cache/restore@v5
+        id: cache-build-deps
         env:
           cache-name: cache-build-deps
         with:
@@ -46,19 +64,41 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
+          sudo apt-get update
           sudo apt-get install --assume-yes coreutils quilt parted qemu-user-static debootstrap zerofree \
           zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc
 
+      # Fix permissions and remove problematic files so the runner user can archive the cache
+      - name: Prepare apt cache for archiving
+        if: always()
+        run: |
+          sudo chmod -R a+r /var/cache/apt/archives 2>/dev/null || true
+          sudo find /var/cache/apt/archives -type d -exec sudo chmod a+x {} \; 2>/dev/null || true
+          sudo rm -f /var/cache/apt/archives/lock 2>/dev/null || true
+          sudo rm -rf /var/cache/apt/archives/partial 2>/dev/null || true
+
+      # Save apt cache after permissions are fixed
+      - name: Save build dependencies
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ steps.cache-build-deps.outputs.cache-primary-key }}
+
       # Runs a set of commands using the runners shell
       - name: Build pi-router
+        env:
+          DEPLOY_ZIP: "1"
         run: |
           echo Building pi-router
           sudo bash ./build.sh
           echo Done.
+          ls -l
 
       # Save the artifacts
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
+          node-version: 22
           #name: image-archive
-          path: deploy/*.zip
+          path: deploy/*.img

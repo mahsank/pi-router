@@ -11,31 +11,34 @@ The resultant Pi OS can be considered an alternative to [OpenWrt](https://openwr
 - Grab the binary package from [here](https://github.com/mahsank/pi-router/releases/download/v1.4/image_2021-06-29-pirouter.zip) and unzip it.
 
   ```bash
-  $ unzip image_2021-06-29-pirouter.zip
+  unzip image_2021-06-29-pirouter.zip
   ```
-- Dump the image on an sd card.
+
+- Dump the image on an SD card.
 
   ```bash
-  $ sudo dd if=2021-06-29-pirouter.img of=/dev/mmcblk0 bs=4M status=progress conv=fdatasync
+  sudo dd if=2021-06-29-pirouter.img of=/dev/mmcblk0
   ```
-- Mount the sd card and change the two letter country code from `fi` to your home country in `/etc/hostapd/hostapd.conf`.
 
-- Unmount and take the sd card out.
+- Mount the SD card and change the two letter country code from `fi` to your home country in `/etc/hostapd/hostapd.conf`.
 
-- Insert the card into sd card slot of RPi board and boot. Login password is `Ra5pb3rry`.
+- Unmount and take the SD card out.
+
+- Insert the card into SD card slot of RPi board and boot. Login password is `Ra5pb3rry`.
 
 - Optional: It might be helpful to read the section [Network Configuration Details](#network-configuration-details).
 
 ## Dependencies
 
-Pi-router build is tested with Debian *bullseye*, *buster*, Ubuntu *Focal Fossa*, and Fedora *33*.
+Pi-router build is tested with Debian *trixie*, *bullseye*, *buster*, Ubuntu *Focal Fossa*, and Fedora *33*.
 
-To install the required dependencies for pi-router on Debian, *bullseye*, *buster*, run:
+To install the required dependencies for pi-router on Debian, *trixie*, *bullseye*, *buster*, run:
 
 ```bash
 $ apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree \
 zip dosfstools bsdtar libcap2-bin grep rsync xz-utils file git curl bc
 ```
+
 To achieve the same on Ubuntu *Focal Fossa*, replace the `bsdtar` package with `libarchive-tools`.
 
 Similarly, on Fedora *33*, run:
@@ -69,7 +72,7 @@ The following environment variables are supported:
 
 - `RELEASE` (Default: `buster`)
 
-  The release version to build image against. Valid values are `jessie`, `stretch`, `buster`, `bullseye`, and `testing`.
+  The release version to build image against. Valid values are `jessie`, `stretch`, `buster`, `bullseye`, `trixie`, and `testing`.
   Note that `pi-router` is tested with `buster` only.
 
 - `APT_PROXY` (Default: unset)
@@ -79,8 +82,8 @@ The following environment variables are supported:
   If Docker is installed, it is possible to set up a local apt caching proxy to speed up subsequent builds like this:
 
   ```bash
-  $ docker-compose up -d
-  $ echo 'APT_PROXY=http://172.17.0.1:3142' >> router-config
+  docker-compose up -d
+  echo 'APT_PROXY=http://172.17.0.1:3142' >> router-config
   ```
 
 - `BASE_DIR` (Default location of `build.sh`)
@@ -181,7 +184,7 @@ The image is built with the following process:
   e.g.
 
   ```bash
-  $ CONTINUE=1 ./build.sh
+  CONTINUE=1 ./build.sh
   ```
 
 Please refer to `build.sh` for finer details.
@@ -191,24 +194,25 @@ Please refer to `build.sh` for finer details.
 Docker can be used to perform the build inside a container. This partially isolates the build from the host system, and allows using the script on distributions other than `Debian` or `Fedora`. It might be worth noting that Docker build can be used on `Debian` or `Fedora` as well. Running Docker build is as simple as issuing the command below:
 
   ```bash
-  $ ./build-docker.sh
+  ./build-docker.sh
   ```
 
 If everything goes well, the final image will be in `deploy/` directory. The build container can be removed after the build with the command:
 
 ```bash
-$ docker rm -v pirouter_work
+docker rm -v pirouter_work
 ```
+
 Similar to `build.sh`, `build-docker.sh` can be continued from where it left during an interruption:
 
 ```bash
-$ CONTINUE=1 ./build-docker.sh
+CONTINUE=1 ./build-docker.sh
 ```
 
 In case of a failure, the container can be examined by issuing the following command:
 
 ```bash
-$ sudo docker run -it --privileged --volumes-from=pirouter_work pi-router /bin/bash
+sudo docker run -it --privileged --volumes-from=pirouter_work pi-router /bin/bash
 ```
 
 In case of successful build, the build container is by default removed. This can be changed by issuing the command:
@@ -255,8 +259,8 @@ update-binfmts: warning: Could not load the binfmt_misc module.
 To resolve this, make sure that `binfmt_misc` module is loaded and `qemu-arm-static` binary is available.
 
 ```bash
-$ lsmod | grep binfmt_misc
-$ command -v qemu-arm-static
+lsmod | grep binfmt_misc
+command -v qemu-arm-static
 ```
 
 If you find this work useful, [consider buying me a coffee](https://ko-fi.com/buchal).
