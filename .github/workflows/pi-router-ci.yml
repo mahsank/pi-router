@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: List contents
-        run: |
+        run: ls -R .
       - uses: actions/checkout@v5
 
       # Node.js LTS version
@@ -35,18 +35,31 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Restore build dependencies
+      - name: Restore apt-cache
         uses: actions/cache/restore@v5
-        id: cache-build-deps
-        env:
-          cache-name: cache-build-deps
+        id: cache-apt
         with:
-          path: /var/cache/apt/archives
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('depends') }}
+          path: ${{ runner.temp }}/apt-archives
+          key: ${{ runner.os }}-apt-cache-${{ env.cache-name }}-${{ hashFiles('depends') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
+      - name: Save build dependencies
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ runner.temp }}/apt-archives
+          key: ${{ steps.cache-apt.outputs.cache-primary-key }}
+
+      - name: Populate /var/cache/apt/archives
+        if: steps.cache-apt.outputs.cache-hit == 'true'
+        run: |
+          sudo mkdir -p /var/cache/apt/archives
+          # Preserve existing files, then copy the restored ones over.
+          sudo cp -a ${{ runner.temp }}/apt-archives/* /var/cache/apt/archives/ || true
+        shell: bash
 
       # Install dependencies
       - name: Install dependencies
@@ -62,13 +75,10 @@ jobs:
           sudo find /var/cache/apt/archives -type d -exec sudo chmod a+x {} \; 2>/dev/null || true
           sudo rm -f /var/cache/apt/archives/lock 2>/dev/null || true
           sudo rm -rf /var/cache/apt/archives/partial 2>/dev/null || true
-
-      - name: Save build dependencies
-        if: always()
-        uses: actions/cache/save@v5
-        with:
-          path: /var/cache/apt/archives
-          key: ${{ steps.cache-build-deps.outputs.cache-primary-key }}
+          # Copy back to the temp location so the cache action can archive it.
+          mkdir -p ${{ runner.temp }}/apt-archives
+          sudo cp -a /var/cache/apt/archives/* ${{ runner.temp }}/apt-archives/
+        shell: bash
 
       - name: Determine artifact base name
         id: names

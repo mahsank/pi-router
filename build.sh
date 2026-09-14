@@ -66,7 +66,7 @@ EOF
       ./"${i}"-run.sh
       log "End ${SUB_STAGE_DIR}/${i}-run.sh"
     fi
-    if [ -f ${i}-run-chroot.sh ]; then
+    if [ -f "${i}"-run-chroot.sh ]; then
       log "Begin ${SUB_STAGE_DIR}/${i}-run-chroot.sh"
       on_chroot <"${i}"-run-chroot.sh
       log "End ${SUB_STAGE_DIR}/${i}-run-chroot.sh"
@@ -138,14 +138,6 @@ while getopts "c:" flag; do
   esac
 done
 
-export PI_ROUTER=${PI_ROUTER:-pi-router}
-export PI_ROUTER_REPO=${PI_ROUTER_REPO:-https://github.com/mahsank/pi-router}
-
-if [ -z "${IMG_NAME}" ]; then
-  echo "IMG_NAME not set" 1>&2
-  exit 1
-fi
-
 export USE_QEMU="${USE_QEMU:-0}"
 export IMG_DATE="${IMG_DATE:-"$(date +%Y-%m-%d)"}"
 export IMG_FILENAME="${IMG_FILENAME:-"${IMG_DATE}-${IMG_NAME}"}"
@@ -216,7 +208,7 @@ if [[ -n "${APT_PROXY}" ]] && ! curl --silent "${APT_PROXY}" >/dev/null; then
 fi
 
 if [[ -n "${WPA_PASSWORD}" && ${#WPA_PASSWORD} -lt 8 || ${#WPA_PASSWORD} -gt 63 ]]; then
-  echo "WPA_PASSWORD" must be between 8 and 63 characters
+  echo "WPA_PASSWORD must be between 8 and 63 characters"
   exit 1
 fi
 
